@@ -1,17 +1,22 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import { Reuni } from "reuni";
+import { Reuni, createReuni } from "reuni";
 
-export type Props = { reuni: Reuni };
+export type Props = {};
 
-export default class Provider extends React.Component<Props> {
+export default class Provider extends React.Component<Props, { reuni: Reuni }> {
   static contextTypes = {
     reuni: PropTypes.object
   };
 
   static childContextTypes = {
-    reuni: PropTypes.object
+    reuni: PropTypes.object.isRequired
   };
+
+  constructor(props: Props) {
+    super(props);
+    this.state = { reuni: createReuni() };
+  }
 
   render() {
     return React.Children.only(this.props.children);
@@ -19,7 +24,7 @@ export default class Provider extends React.Component<Props> {
 
   getChildContext() {
     return {
-      reuni: this.props.reuni
+      reuni: this.state.reuni
     };
   }
 }
