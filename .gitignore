@@ -1,1 +1,8 @@
 node_modules/
+coverage/
+example/build/
+tmp/
+.build.cjs/
+.build.es/
+build/
+*.log
