@@ -32,8 +32,8 @@ export class Mount<P extends PP, PP> {
     return this;
   }
 
-  toHOC() {
-    return (props: Omit<P, keyof PP>) =>
+  toHOC(): React.StatelessComponent<Omit<P, keyof PP>> {
+    return (props: any) =>
       React.createElement(Connector, {
         Component: this._Component,
         childProps: props,
