@@ -34,7 +34,8 @@ export type Context = {
 
 export default class Connector extends React.Component<Props<any, any>, State> {
   static contextTypes = {
-    reuniInfo: PropTypes.any
+    reuniInfo: PropTypes.any,
+    router: PropTypes.any
   };
 
   static childContextTypes = {
@@ -84,6 +85,7 @@ export default class Connector extends React.Component<Props<any, any>, State> {
         if (isValid !== false) {
           this.setState({
             isValid: true,
+            reuni,
             entityDict
           });
         } else {
@@ -153,7 +155,13 @@ export default class Connector extends React.Component<Props<any, any>, State> {
     if (shallowEqual(this.props, nextProps) !== false) {
       return true;
     }
-    if (shallowEqual(this.context, nextContext.context) !== false) {
+    if (shallowEqual(this.context, nextContext) !== false) {
+      return true;
+    }
+    if (
+      this.context.router != null &&
+      this.context.router.route.location !== nextContext.router.route.location
+    ) {
       return true;
     }
     return false;
