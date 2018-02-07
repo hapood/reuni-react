@@ -17,18 +17,29 @@ export type State = {
   childProps: any;
   isValid: boolean;
   entityDict: any;
+  reuni: Reuni | null | undefined;
+  nodeId: string | null | undefined;
+};
+
+export type Context = {
+  reuniInfo:
+    | {
+        isValid: boolean;
+        reuni: Reuni;
+        parentId: string;
+      }
+    | null
+    | undefined;
 };
 
 export default class Connector extends React.Component<Props<any, any>, State> {
-  private _node: NodeAPI | null | undefined;
-
   static contextTypes = {
-    reuni: PropTypes.any
+    reuniInfo: PropTypes.any,
+    router: PropTypes.any
   };
 
   static childContextTypes = {
-    reuni: PropTypes.object.isRequired,
-    reuniNode: PropTypes.string.isRequired
+    reuniInfo: PropTypes.any
   };
 
   constructor(props: Props<any, any>) {
@@ -36,39 +47,54 @@ export default class Connector extends React.Component<Props<any, any>, State> {
     this.state = {
       childProps: {},
       isValid: false,
-      entityDict: null
+      entityDict: null,
+      reuni: null,
+      nodeId: null
     };
   }
 
   componentWillMount() {
-    this.remountNode(this.props, this.context);
+    let { reuniInfo }: Context = this.context;
+    if (reuniInfo != null) {
+      let { isValid, reuni, parentId } = reuniInfo;
+      if (isValid !== false) {
+        this.mountReuniNode(this.props, reuni, parentId);
+      }
+    } else {
+      throw new Error("Node must under Provider Component.");
+    }
   }
 
-  remountNode = (props: Props<any, any>, context: any) => {
-    let { reuni, reuniNode }: { reuni: Reuni; reuniNode: string } = context;
+  mountReuniNode = (
+    props: Props<any, any>,
+    reuni: Reuni,
+    parentId: string | null | undefined
+  ) => {
     let { thread, nodeName, id, storeObserver, stores } = props;
     let node = reuni.mountNode({
       id,
       thread,
       name: nodeName,
-      parentId: reuniNode
+      parentId
     });
-    stores.forEach(([storeName, Store, storeOb]) => {
-      node.addStore(storeName, Store, storeOb);
+    this.setState({ nodeId: node.getId() }, () => {
+      stores.forEach(([storeName, Store, storeOb]) => {
+        node.addStore(storeName, Store, storeOb);
+      });
+      node.observe(storeObserver, (isValid, entityDict) => {
+        if (isValid !== false) {
+          this.setState({
+            isValid: true,
+            reuni,
+            entityDict
+          });
+        } else {
+          this.setState({
+            isValid: false
+          });
+        }
+      });
     });
-    node.observe(storeObserver, (isValid, entityDict) => {
-      if (isValid !== false) {
-        this.setState({
-          isValid: true,
-          entityDict
-        });
-      } else {
-        this.setState({
-          isValid: false
-        });
-      }
-    });
-    this._node = node;
   };
 
   componentWillReceiveProps(nextProps: Props<any, any>, nextContext: any) {
@@ -80,23 +106,42 @@ export default class Connector extends React.Component<Props<any, any>, State> {
       id !== nextProps.id ||
       nodeName !== nextProps.nodeName
     ) {
-      let node = this._node as NodeAPI;
-      this._node = null;
-      let {
-        reuni,
-        reuniNode
-      }: { reuni: Reuni; reuniNode: string } = nextContext;
-      reuni.unmoutNode(node.getId());
-      this.remountNode(nextProps, nextContext);
+      let { reuniInfo }: Context = nextContext;
+      if (reuniInfo != null) {
+        let { isValid, reuni, parentId } = reuniInfo;
+        if (isValid !== false) {
+          let { nodeId } = this.state;
+          if (nodeId != null) {
+            reuni.unmoutNode(nodeId);
+            this.setState({ isValid: false, nodeId: null }, () => {
+              this.mountReuniNode(nextProps, reuni, parentId);
+            });
+          }
+        }
+      } else {
+        this.setState({
+          isValid: false
+        });
+      }
     }
   }
 
   componentWillUnmount() {
-    let {
-      reuni,
-      reuniNode
-    }: { reuni: Reuni; reuniNode: string } = this.context;
-    reuni.unmoutNode(reuniNode);
+    let { reuniInfo }: Context = this.context;
+    let { reuni }: { reuni: Reuni } = reuniInfo as any;
+    if (this.state.nodeId != null) {
+      reuni.unmoutNode(this.state.nodeId);
+    }
+  }
+
+  getChildContext() {
+    return {
+      reuniInfo: {
+        isValid: this.state.isValid,
+        reuni: this.state.reuni,
+        parentId: this.state.nodeId
+      }
+    };
   }
 
   shouldComponentUpdate(
@@ -110,7 +155,13 @@ export default class Connector extends React.Component<Props<any, any>, State> {
     if (shallowEqual(this.props, nextProps) !== false) {
       return true;
     }
-    if (shallowEqual(this.context, nextContext.context) !== false) {
+    if (shallowEqual(this.context, nextContext) !== false) {
+      return true;
+    }
+    if (
+      this.context.router != null &&
+      this.context.router.route.location !== nextContext.router.route.location
+    ) {
       return true;
     }
     return false;

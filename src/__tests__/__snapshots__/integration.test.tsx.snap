@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Cross store task works sync 1`] = `
-<div>
-  0
-</div>
-`;
-
-exports[`Cross store task works sync 2`] = `
-<div>
-  10
-</div>
-`;
-
 exports[`works with store observing 1`] = `
 <div>
   0

@@ -6,11 +6,11 @@ export type Props = {};
 
 export default class Provider extends React.Component<Props, { reuni: Reuni }> {
   static contextTypes = {
-    reuni: PropTypes.object
+    reuniInfo: PropTypes.any
   };
 
   static childContextTypes = {
-    reuni: PropTypes.object.isRequired
+    reuniInfo: PropTypes.any
   };
 
   constructor(props: Props) {
@@ -24,7 +24,11 @@ export default class Provider extends React.Component<Props, { reuni: Reuni }> {
 
   getChildContext() {
     return {
-      reuni: this.state.reuni
+      reuniInfo: {
+        reuni: this.state.reuni,
+        isValid: true,
+        parentId: null
+      }
     };
   }
 }
