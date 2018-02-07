@@ -16,7 +16,6 @@ export class Mount<P extends PP, PP> {
     thread: symbol
   ) {
     this._Component = Component;
-    this._name = name;
     this._stores = [];
     this._storeObserver = storeObserver;
     this._thread = thread;
