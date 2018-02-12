@@ -1,0 +1,13 @@
+{
+  "version": "2.7.1",
+  "compilerOptions": {
+    "target": "es5",
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["es2017", "dom"],
+    "jsx": "react"
+  },
+  "exclude": ["node_modules", "example"]
+}
