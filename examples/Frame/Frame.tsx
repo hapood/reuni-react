@@ -1,7 +1,6 @@
 import * as React from "react";
-
-import ModuleReUse from "../ModuleReUse";
-import PassDownState from "../passDownState";
+import SimpleAdd from "../SimpleAdd";
+import ModuleReuse from "../ModuleReuse";
 import { Props } from "./types";
 
 const linkStyle = {
@@ -10,7 +9,7 @@ const linkStyle = {
   cursor: "pointer"
 };
 
-class Frame extends React.Component<Props, { page: string }> {
+export default class Frame extends React.Component<Props, { page: string }> {
   componentWillMount() {
     this.setState({
       page: "emptyPage"
@@ -18,7 +17,6 @@ class Frame extends React.Component<Props, { page: string }> {
   }
 
   render() {
-    let { cnt, addCnt, clearCnt } = this.props;
     return (
       <div>
         <div>
@@ -26,29 +24,27 @@ class Frame extends React.Component<Props, { page: string }> {
             <li>
               <a
                 style={linkStyle}
-                onClick={() =>
-                  this.setState({ page: "passDownStateAndActions" })
-                }
+                onClick={() => this.setState({ page: "simpleAdd" })}
               >
-                Pass Down State And Actions
+                Simple Add
               </a>
             </li>
             <li>
               <a
                 style={linkStyle}
-                onClick={() => this.setState({ page: "moduleReUse" })}
+                onClick={() => this.setState({ page: "moduleReuse" })}
               >
-                Module Re-Use
+                Module Reuse
               </a>
             </li>
           </ul>
           <hr />
           <div>
             <div style={{ marginTop: "1rem" }}>
-              {this.state.page === "passDownStateAndActions" ? (
-                <PassDownState />
-              ) : this.state.page === "moduleReUse" ? (
-                <ModuleReUse />
+              {this.state.page === "simpleAdd" ? (
+                <SimpleAdd />
+              ) : this.state.page === "moduleReuse" ? (
+                <ModuleReuse />
               ) : null}
             </div>
           </div>
