@@ -12,8 +12,8 @@ export class Mount<P extends PP, PP> {
 
   constructor(
     Component: React.ComponentType<P>,
-    thread: symbol,
-    storeObserver: StoreObserver<PP>
+    storeObserver: StoreObserver<PP>,
+    thread: symbol
   ) {
     this._Component = Component;
     this._stores = [];
@@ -23,10 +23,12 @@ export class Mount<P extends PP, PP> {
 
   setName(name: string) {
     this._name = name;
+    return this;
   }
 
   setThread(thread: symbol) {
     this._thread = thread;
+    return this;
   }
 
   addStore(
@@ -55,5 +57,5 @@ export default function createMount(thread: symbol = Symbol("thread")) {
   return <P extends PP, PP>(
     Component: React.ComponentType<P>,
     storeObserver: StoreObserver<PP>
-  ) => new Mount<P, PP>(Component, thread, storeObserver);
+  ) => new Mount<P, PP>(Component, storeObserver, thread);
 }
