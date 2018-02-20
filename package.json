@@ -1,6 +1,6 @@
 {
   "name": "reuni-react",
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-beta.1",
   "description": "React bindings for Reuni",
   "scripts": {
     "prettier":
@@ -27,30 +27,29 @@
   },
   "homepage": "https://github.com/hapood/reuni-react#readme",
   "peerDependencies": {
-    "prop-types": ">=15",
     "react": ">=16"
   },
   "dependencies": {
-    "reuni": "^0.1.0-alpha.5"
+    "prop-types": "^15.6.0",
+    "reuni": "^0.1.0-beta.1"
   },
   "devDependencies": {
-    "@types/jest": "^22.1.1",
+    "@types/jest": "^22.1.3",
     "@types/prop-types": "^15.5.2",
-    "@types/react": "^16.0.36",
-    "@types/react-test-renderer": "^16.0.0",
-    "jest": "^22.1.4",
+    "@types/react": "^16.0.38",
+    "@types/react-test-renderer": "^16.0.1",
+    "jest": "^22.3.0",
     "prettier": "^1.10.2",
-    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-test-renderer": "^16.2.0",
-    "rollup": "^0.55.3",
+    "rollup": "^0.56.2",
     "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-filesize": "^1.5.0",
-    "rollup-plugin-node-resolve": "^3.0.2",
-    "ts-jest": "^22.0.3",
-    "ts-loader": "^3.4.0",
+    "rollup-plugin-node-resolve": "^3.0.3",
+    "ts-jest": "^22.0.4",
+    "ts-loader": "^3.5.0",
     "tslib": "^1.9.0",
-    "typescript": "^2.7.1"
+    "typescript": "^2.7.2"
   },
   "jest": {
     "moduleFileExtensions": ["ts", "tsx", "js"],
