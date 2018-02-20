@@ -1,3 +1,1 @@
-export type Props = {
-  version: number;
-};
+export type Props = {};

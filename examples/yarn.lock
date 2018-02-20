@@ -3109,16 +3109,16 @@ resolve-url@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/resolve-url/-/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
 
-reuni-react@^0.1.0-alpha.5:
-  version "0.1.0-alpha.5"
-  resolved "https://registry.yarnpkg.com/reuni-react/-/reuni-react-0.1.0-alpha.5.tgz#a36a7c797031c3afdf3200175f20a5a7bb15c410"
+reuni-react@^0.1.0-beta.1:
+  version "0.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/reuni-react/-/reuni-react-0.1.0-beta.1.tgz#7df3daf6073a036bd33bf2b1c1551d9c58110722"
   dependencies:
     prop-types "^15.6.0"
-    reuni "^0.1.0-alpha.6"
+    reuni "^0.1.0-beta.1"
 
-reuni@^0.1.0-alpha.6:
-  version "0.1.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/reuni/-/reuni-0.1.0-alpha.6.tgz#31f6c1cdd690a9c58b287af49bfb4c54279297b6"
+reuni@^0.1.0-beta.1:
+  version "0.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/reuni/-/reuni-0.1.0-beta.1.tgz#c4fa8e653e95b19bb140ed94b4b7da1136b971b8"
 
 right-align@^0.1.1:
   version "0.1.3"

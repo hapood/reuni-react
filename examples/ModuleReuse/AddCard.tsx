@@ -8,7 +8,14 @@ class AddCard extends React.Component<Props> {
   render() {
     let { addStore, presetNum } = this.props;
     return (
-      <div style={{ width: "20rem", padding: "1rem" }}>
+      <div
+        style={{
+          width: "20rem",
+          padding: "1rem",
+          marginBottom: "0.5rem",
+          border: "1px solid"
+        }}
+      >
         <div>{addStore.cnt}</div>
         <button onClick={() => addStore.add(presetNum)}>
           {`Add ${presetNum}`}
