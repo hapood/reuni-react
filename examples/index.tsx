@@ -8,21 +8,21 @@ import Frame from "./Frame";
 
 let appDom = document.getElementById("app");
 
-let render = (FrameComponent: typeof Frame, version: number) => {
+let render = (FrameComponent: typeof Frame) => {
   let AProvider = Provider as any;
   ReactDOM.render(
     <Provider>
-      <FrameComponent version={version} />
+      <FrameComponent />
     </Provider>,
     appDom
   );
 };
 
 let version = 0;
-render(Frame, version);
+render(Frame);
 if ((module as any).hot) {
-  (module as any).hot.accept("./Frame/Frame", () => {
-    let UpdatedFrame = require("./Frame/Frame").default;
-    render(UpdatedFrame, ++version);
+  (module as any).hot.accept("./Frame", () => {
+    let UpdatedFrame = require("./Frame").default;
+    render(UpdatedFrame);
   });
 }
